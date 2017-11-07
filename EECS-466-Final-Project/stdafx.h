@@ -11,3 +11,6 @@
 #include <tchar.h>
 #include <stdlib.h>
 #include <gl/glut.h>
+#include <windows.h>
+#include <string>
+#include <math.h>
