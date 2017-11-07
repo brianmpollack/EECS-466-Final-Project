@@ -1,7 +1,8 @@
-#include "stdafx.h"
+#pragma once
+#include "common.h"
+#include "ferris_wheel.h"
 
 /* ---GLOBALS--- */
-const double PI = 3.1415926535897;
 int window_width, window_height;    // Window dimensions
 float CameraRadius = 10;
 float CameraTheta = PI / 2;
@@ -10,6 +11,7 @@ int MouseX = 0;
 int MouseY = 0;
 bool MouseLeft = false;
 bool MouseRight = false;
+FerrisWheel ferris_wheel = FerrisWheel(4);
 /* ---GLOBALS--- */
 
 void ReshapeFunc(int x, int y)
@@ -37,8 +39,8 @@ void MotionFunc(int x, int y)
 	{
 		CameraTheta += 0.01*PI*(MouseX - x);
 		CameraPhi += 0.01*PI*(MouseY - y);
-		CameraPhi = min(CameraPhi, 2 * PI / 3);
-		CameraPhi = max(CameraPhi, PI / 3);
+		//CameraPhi = min(CameraPhi, 2 * PI / 3);
+		//CameraPhi = max(CameraPhi, PI / 3);
 	}
 	if (MouseRight)
 	{
@@ -69,7 +71,7 @@ void KeyboardFunc(unsigned char key, int x, int y)
 	glutPostRedisplay();
 }
 
-void DisplayFunc(void) {
+void display(void) {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -89,8 +91,13 @@ void DisplayFunc(void) {
 		CameraRadius*cos(CameraPhi),
 		0, 0, 0,
 		0, 0, 1);
-	glEnable(GL_DEPTH_TEST);
-	glutSolidTeapot(1);
+	//glEnable(GL_DEPTH_TEST);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	//DRAW FERRIS WHEEL BOXES
+	ferris_wheel.draw();
+
+	//END DRAW FERRIS WHEEL
 
 	glutSwapBuffers();
 }
@@ -104,7 +111,7 @@ int main(int argc, char **argv)
 	glutCreateWindow("POLLACK EECS-466 FINAL PROJECT");
 
 
-	glutDisplayFunc(DisplayFunc);
+	glutDisplayFunc(display);
 	glutReshapeFunc(ReshapeFunc);
 	glutMouseFunc(MouseFunc);
 	glutMotionFunc(MotionFunc);
