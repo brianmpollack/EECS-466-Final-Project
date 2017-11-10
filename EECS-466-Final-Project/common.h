@@ -7,6 +7,8 @@
 #include <string>
 #include <math.h>
 #include <iostream>
+#include <map>
+#include <vector>
 
 typedef struct _point {
 	float x, y, z;

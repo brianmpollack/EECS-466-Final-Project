@@ -1,5 +1,6 @@
 #pragma once
 #include "Mesh.h"
+#include "Vertex.h"
 #include "common.h"
 
 class MeshReader

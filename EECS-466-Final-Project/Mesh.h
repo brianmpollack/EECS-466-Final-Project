@@ -1,11 +1,15 @@
 #pragma once
+#include "Vertex.h"
+#include "Face.h"
 #include "common.h"
 class Mesh
 {
 public:
 	int verts = 0, faces = 0, norms = 0;    // Number of vertices, faces and normals in the system
-	point *vertList, *normList; // Vertex and Normal Lists
-	faceStruct *faceList;	    // Face List
+	//Vertex *vertList;
+	std::map<int, Vertex> vertList;
+	//faceStruct *faceList;
+	std::vector<Face> faceList;
 	Mesh();
 	~Mesh();
 };

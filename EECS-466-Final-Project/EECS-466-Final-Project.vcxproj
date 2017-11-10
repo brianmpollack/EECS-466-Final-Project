@@ -155,15 +155,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h" />
+    <ClInclude Include="Face.h" />
     <ClInclude Include="ferris_wheel.h" />
+    <ClInclude Include="FourMatrix.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshReader.h" />
+    <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EECS466FinalProject.cpp" />
+    <ClCompile Include="Face.cpp" />
     <ClCompile Include="ferris_wheel.cpp" />
+    <ClCompile Include="FourMatrix.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshReader.cpp" />
+    <ClCompile Include="Vertex.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

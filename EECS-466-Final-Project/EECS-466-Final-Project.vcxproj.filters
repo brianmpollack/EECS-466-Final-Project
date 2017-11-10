@@ -30,6 +30,15 @@
     <ClInclude Include="Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Face.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FourMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EECS466FinalProject.cpp">
@@ -42,6 +51,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vertex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Face.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FourMatrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
