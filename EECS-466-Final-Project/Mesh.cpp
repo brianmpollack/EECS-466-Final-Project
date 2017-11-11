@@ -22,7 +22,7 @@ void Mesh::calculateQs()
 
 void Mesh::reduce()
 {
-	for (int i = 0; i < delFace; i += 2)
+	/*for (int i = 0; i < delFace; i += 2)
 	{
 		Edge e = edgeQueue.top();
 		Vertex* v1 = e.v1;
@@ -42,5 +42,5 @@ void Mesh::reduce()
 		{
 
 		}
-	}
+	}*/
 }

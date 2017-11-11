@@ -23,31 +23,31 @@ void MeshReader::draw()
 
 	//int tempSTOP = 0; //TODO: REMOVE
 
-	std::map<int, Vertex>::iterator it;
+	std::map<int, Vertex>::iterator it; //All vertices
 	for (it = mesh.vertList.begin(); it != mesh.vertList.end(); it++)
 	{
 		Vertex v1 = it->second;
 
-		std::vector<Vertex*>::iterator it2;
-		for (it2 = v1.connectedVertices.begin(); it2 != v1.connectedVertices.end(); it2++)
+		std::vector<Edge>::iterator it2; //v1's edges
+		for (it2 = v1.edges.begin(); it2 != v1.edges.end(); it2++)
 		{
-			Vertex v2 = **it2;
-			std::vector<Vertex*>::iterator it3;
-			for (it3 = it2; it3 != v1.connectedVertices.end(); it3++)
+			Vertex* v2 = (*it2).v2;
+			std::vector<Edge>::iterator it3; //v2's edges
+			for (it3 = it2; it3 != v1.edges.end(); it3++)
 			{
-				Vertex v3 = **it3;
+				Vertex* v3 = (*it3).v2;
 				//If v3 is connected to v2
 				//std::cout << "V2" << v2.x << "," << "v2.y" << "," << v2.z << std::endl;
 				//Vertex vtest = *v2.connectedVertices[0];
 				//std::cout << vtest.x << "," << vtest.y << "," << vtest.z << std::endl;
 				//if (std::find(v2.connectedVertices.begin(), v2.connectedVertices.end(), &v3) != v2.connectedVertices.end())
-				if (v2.isConnectedTo(&v3))
+				if (v2->isConnectedTo(v3))
 				{
 					//std::cout << "PRINTING TRIANGLE" << std::endl;
 					glBegin(GL_TRIANGLES);
 					glVertex3f(v1.x, v1.y, v1.z);
-					glVertex3f(v2.x, v2.y, v2.z);
-					glVertex3f(v3.x, v3.y, v3.z);
+					glVertex3f(v2->x, v2->y, v2->z);
+					glVertex3f(v3->x, v3->y, v3->z);
 					glEnd();
 				}
 				//if (tempSTOP > 5) return;
@@ -146,35 +146,41 @@ void MeshReader::read()
 		mesh.vertList[iz].connectedVerticesIDs.push_back(ix);
 		mesh.vertList[iz].connectedVerticesIDs.push_back(iy);*/
 		mesh.faceList.push_back(Face(&mesh.vertList[ix], &mesh.vertList[iy], &mesh.vertList[iz]));
-		mesh.vertList[ix].connectedVertices.push_back(&mesh.vertList[iy]);
+		/*mesh.vertList[ix].connectedVertices.push_back(&mesh.vertList[iy]);
 		mesh.vertList[ix].connectedVertices.push_back(&mesh.vertList[iz]);
 		mesh.vertList[iy].connectedVertices.push_back(&mesh.vertList[ix]);
 		mesh.vertList[iy].connectedVertices.push_back(&mesh.vertList[iz]);
 		mesh.vertList[iz].connectedVertices.push_back(&mesh.vertList[ix]);
-		mesh.vertList[iz].connectedVertices.push_back(&mesh.vertList[iy]);
+		mesh.vertList[iz].connectedVertices.push_back(&mesh.vertList[iy]);*/
+		mesh.vertList[ix].edges.push_back(Edge(&mesh.vertList[ix], &mesh.vertList[iy]));
+		mesh.vertList[ix].edges.push_back(Edge(&mesh.vertList[ix], &mesh.vertList[iz]));
+		mesh.vertList[iy].edges.push_back(Edge(&mesh.vertList[iy], &mesh.vertList[ix]));
+		mesh.vertList[iy].edges.push_back(Edge(&mesh.vertList[iy], &mesh.vertList[iz]));
+		mesh.vertList[iz].edges.push_back(Edge(&mesh.vertList[iz], &mesh.vertList[ix]));
+		mesh.vertList[iz].edges.push_back(Edge(&mesh.vertList[iz], &mesh.vertList[iy]));
 	}
 	fclose(fp);
 
-	mesh.calculateQs();
+	/*mesh.calculateQs();
 
 	std::map<int, Vertex>::iterator it;
 	for (it = mesh.vertList.begin(); it != mesh.vertList.end(); it++)
 	{
 		Vertex currentVertex = it->second;
-		std::vector<Vertex*>::iterator connectedVertexIterator;
-		for (connectedVertexIterator = currentVertex.connectedVertices.begin(); connectedVertexIterator != currentVertex.connectedVertices.end(); connectedVertexIterator++)
+		std::vector<Edge>::iterator edgeIterator;
+		for (edgeIterator = currentVertex.edges.begin(); edgeIterator != currentVertex.edges.end(); edgeIterator++)
 		{
-			Vertex* currentConnectedVertex = *connectedVertexIterator;
-			Edge e(&currentVertex, currentConnectedVertex);
-			e.calculateV();
-			e.calculateCost();
+			//Vertex* currentConnectedVertex = (*edgeIterator).v2;
+			Edge* e = &*edgeIterator;
+			e->calculateV();
+			e->calculateCost();
 			mesh.edgeQueue.push(e);
 		}
 	}
 
-	std::cout << "Edge Queue Test: " << mesh.edgeQueue.top().cost << std::endl;
+	std::cout << "Edge Queue Test: " << mesh.edgeQueue.top()->cost << std::endl;
 
-	mesh.delFace = (int)((1 - mesh.ratio) * mesh.faces);
+	mesh.delFace = (int)((1 - mesh.ratio) * mesh.faces);*/
 	
 
 	//for (std::vector<Edge>::iterator it = tempEdge.begin(); it != tempEdge.end(); it++)

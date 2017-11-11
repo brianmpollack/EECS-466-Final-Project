@@ -38,12 +38,12 @@ void Vertex::addNormal(float x, float y, float z)
 bool Vertex::isConnectedTo(const Vertex* v)
 {
 	//std::cout << "Checking ID: " << id << " against ID: " << v->id << std::endl;
-	std::vector<Vertex*>::iterator it;
-	for (it = connectedVertices.begin(); it != connectedVertices.end(); it++)
+	std::vector<Edge>::iterator it;
+	for (it = edges.begin(); it != edges.end(); it++)
 	{
-		Vertex currentVertex = **it;
+		Vertex* currentVertex = (*it).v2;
 		//std::cout << "     " << currentVertex.id << std::endl;
-		if (currentVertex.id == v->id) return true;
+		if (currentVertex->id == v->id) return true;
 	}
 	return false;
 }
