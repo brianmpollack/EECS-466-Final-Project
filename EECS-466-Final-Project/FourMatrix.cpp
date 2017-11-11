@@ -176,7 +176,10 @@ FourMatrix FourMatrix::inverse() const
 	double det = matrix[0][0] * res[0][0] + matrix[0][1] * res[1][0] + matrix[0][2] * res[2][0] + matrix[0][3] * res[3][0];
 
 	if (det == 0)
+	{
 		throw std::domain_error("Determinant is 0.");
+	}
+		
 
 	det = 1.0 / det;
 

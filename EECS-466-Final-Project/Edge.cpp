@@ -43,14 +43,14 @@ void Edge::calculateV()
 	vertexDelta[3][3] = 1;
 
 	//Vector4 ans = vertexDelta.solveSystem(Vector4(0, 0, 0, 1));
-	Vector4 ans = vertexDelta.inverse() * Vector4(0, 0, 0, 1);
-	if (ans.h > 0)
+	try {
+		Vector4 ans = vertexDelta.inverse() * Vector4(0, 0, 0, 1);
 		this->v = Vector3(ans.x, ans.y, ans.z);
-	else
+	}
+	catch (const std::domain_error& e)
 	{
 		//If we couldn't calculate a point, just use the midpoint
 		this->v = (v1Vector + v2Vector) / 2;
-		std::cout << "USING MIDPOINT" << std::endl;
 	} //TODO: Do we want to also do the endpoints? (See circled section at end of part 4.0)
 		
 }
