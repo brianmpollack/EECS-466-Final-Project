@@ -34,3 +34,16 @@ void Vertex::addNormal(float x, float y, float z)
 	this->normZ += z;
 	this->normCount++;
 }
+
+bool Vertex::isConnectedTo(const Vertex* v)
+{
+	//std::cout << "Checking ID: " << id << " against ID: " << v->id << std::endl;
+	std::vector<Vertex*>::iterator it;
+	for (it = connectedVertices.begin(); it != connectedVertices.end(); it++)
+	{
+		Vertex currentVertex = **it;
+		//std::cout << "     " << currentVertex.id << std::endl;
+		if (currentVertex.id == v->id) return true;
+	}
+	return false;
+}

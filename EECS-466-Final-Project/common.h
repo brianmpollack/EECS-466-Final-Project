@@ -9,6 +9,12 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <queue>
+#include <functional>
+#include "Vector3.h"
+#include "Vector4.h"
+#include "ThreeMatrix.h"
+#include "FourMatrix.h"
 
 typedef struct _point {
 	float x, y, z;
