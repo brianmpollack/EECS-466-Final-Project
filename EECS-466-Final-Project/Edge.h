@@ -1,9 +1,7 @@
 #pragma once
-#include "Vertex.h"
-#include "ThreeMatrix.h"
-#include "Vector3.h"
-#include "Vector4.h"
 #include "common.h"
+#include "Vertex.h"
+
 class Edge
 {
 public:

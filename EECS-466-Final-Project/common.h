@@ -1,4 +1,9 @@
 #pragma once
+class Edge;
+class Mesh;
+class Vertex;
+class MeshReader;
+class Face;
 #include <stdio.h>
 #include <tchar.h>
 #include <stdlib.h>
