@@ -9,6 +9,7 @@ public:
 	float x=0, y=0, z=0;
 	float normX=0, normY=0, normZ=0;
 	int normCount=0;
+	bool isDeleted = false;
 	//std::vector<Vertex*> connectedVertices;
 	std::vector<std::shared_ptr<Edge>> edges;
 	Vertex();

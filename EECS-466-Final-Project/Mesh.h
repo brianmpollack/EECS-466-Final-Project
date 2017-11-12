@@ -7,7 +7,7 @@
 class Mesh
 {
 public:
-	double ratio = .5;
+	double ratio = .6;
 	int delFace;
 	int verts = 0, faces = 0, norms = 0;    // Number of vertices, faces and normals in the system
 	//Vertex *vertList;

@@ -22,16 +22,19 @@ void MeshReader::draw()
 	glColor3f(1, 0, 0);
 
 	//int tempSTOP = 0; //TODO: REMOVE
+	int numFacesPrinted = 0;
 
 	std::map<int, std::shared_ptr<Vertex>>::iterator it; //All vertices
 	for (it = mesh.vertList.begin(); it != mesh.vertList.end(); it++)
 	{
 		auto v1 = it->second;
+		if (v1->isDeleted == true) continue;
 
 		std::vector<std::shared_ptr<Edge>>::iterator it2; //v1's edges
 		for (it2 = v1->edges.begin(); it2 != v1->edges.end(); it2++)
 		{
 			auto v2 = (*it2)->v2;
+			if (v2->isDeleted == true) continue;
 			std::vector<std::shared_ptr<Edge>>::iterator it3; //v2's edges
 			for (it3 = it2; it3 != v1->edges.end(); it3++)
 			{
@@ -49,12 +52,14 @@ void MeshReader::draw()
 					glVertex3f(v2->x, v2->y, v2->z);
 					glVertex3f(v3->x, v3->y, v3->z);
 					glEnd();
+					numFacesPrinted++;
 				}
 				//if (tempSTOP > 5) return;
 				//tempSTOP ++ ;
 			}
 		}
 	}
+	std::cout << "NUM FACES PRINTED: " << numFacesPrinted << std::endl;
 	// for (int i = 0; i < mesh.faces; i++)
 	/*for (std::vector<Face>::iterator it = mesh.faceList.begin(); it != mesh.faceList.end(); it++)
 	{
@@ -171,31 +176,26 @@ void MeshReader::read()
 		std::vector<std::shared_ptr<Edge>>::iterator edgeIterator;
 		for (edgeIterator = currentVertex->edges.begin(); edgeIterator != currentVertex->edges.end(); edgeIterator++)
 		{
-			//Vertex* currentConnectedVertex = (*edgeIterator).v2;
-
 			auto e = *edgeIterator;
 			e->calculateV();
 			e->calculateCost();
-			//e->cost = 1234;
 			mesh.edgeQueue.push(e);
-			//Edge eTest2 = *mesh.edgeQueue.top();
-			//eTest2.cost = 1234;
-			//std::cout << "Edge Queue Test: " << mesh.edgeQueue.top()->cost << std::endl;
-			//mesh.edgeQueue.pop();
 		}
 	}
 
-	std::cout << "Edge Queue Test: " << mesh.vertList[33]->edges[0]->cost << std::endl;
+	//std::cout << "Edge Queue Test: " << mesh.vertList[33]->edges[0]->cost << std::endl;
 
-	for (int testEdgeQueue = 0; testEdgeQueue < 30; testEdgeQueue++)
+	//for (int testEdgeQueue = 0; testEdgeQueue < mesh.faces; testEdgeQueue++)
+	/*while(!mesh.edgeQueue.empty())
 	{
 		std::cout << "Edge Queue Test: " << mesh.edgeQueue.top()->cost << std::endl;
 		mesh.edgeQueue.pop();
-	}
+	}*/
 	
 
 	mesh.delFace = (int)((1 - mesh.ratio) * mesh.faces);
-	
+	mesh.reduce();
+	std::cout << "DONE REDUCING" << std::endl;
 
 	//for (std::vector<Edge>::iterator it = tempEdge.begin(); it != tempEdge.end(); it++)
 	//{

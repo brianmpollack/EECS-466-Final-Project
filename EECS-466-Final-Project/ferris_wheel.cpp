@@ -5,7 +5,7 @@ FerrisWheel::FerrisWheel(float radius)
 {
 	this->radius = radius;
 	//Set mesh readers
-	passenger_car_mesh_reader.setFilename("helicopter.obj");
+	passenger_car_mesh_reader.setFilename("diamond.obj");
 	passenger_car_mesh_reader.read();
 }
 
