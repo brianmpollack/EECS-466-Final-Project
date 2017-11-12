@@ -2,7 +2,7 @@
 
 
 
-Edge::Edge(Vertex* v1, Vertex* v2)
+Edge::Edge(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2)
 {
 	this->v1 = v1;
 	this->v2 = v2;
@@ -13,22 +13,22 @@ Edge::~Edge()
 {
 }
 
-bool Edge::operator >(Edge const& e)
+/*bool Edge::operator >(Edge const& e)
 {
 	return this->cost > e.cost;
-}
-bool operator>(Edge const & e1, Edge const & e2)
+}*/
+/*bool operator>(Edge const & e1, Edge const & e2)
 {
 	return e1.cost > e2.cost;
-}
-bool Edge::operator <(Edge const& e)
+}*/
+/*bool Edge::operator <(Edge const& e)
 {
 	return this->cost < e.cost;
-}
-bool Edge::operator =(Edge const& e)
+}*/
+/*bool Edge::operator =(Edge const& e)
 {
 	return this->cost = e.cost;
-}
+}*/
 
 void Edge::calculateV()
 {

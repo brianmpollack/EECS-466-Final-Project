@@ -7,10 +7,10 @@
 class Face
 {
 public:
-	Vertex* v1;
-	Vertex* v2;
-	Vertex* v3;
-	Face(Vertex* v1, Vertex* v2, Vertex* v3);
+	std::shared_ptr<Vertex> v1;
+	std::shared_ptr<Vertex> v2;
+	std::shared_ptr<Vertex> v3;
+	Face(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2, std::shared_ptr<Vertex> v3);
 	~Face();
 	void calculateVertexQsFromThisFace();
 };

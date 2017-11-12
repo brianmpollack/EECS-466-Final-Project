@@ -16,6 +16,7 @@ class Face;
 #include <vector>
 #include <queue>
 #include <functional>
+#include <memory>
 #include "Vector3.h"
 #include "Vector4.h"
 #include "ThreeMatrix.h"

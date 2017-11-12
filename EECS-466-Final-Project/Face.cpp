@@ -2,7 +2,7 @@
 
 
 
-Face::Face(Vertex* v1, Vertex* v2, Vertex* v3)
+Face::Face(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2, std::shared_ptr<Vertex> v3)
 {
 	this->v1 = v1;
 	this->v2 = v2;

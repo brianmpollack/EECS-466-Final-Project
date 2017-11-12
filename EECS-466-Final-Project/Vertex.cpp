@@ -35,13 +35,14 @@ void Vertex::addNormal(float x, float y, float z)
 	this->normCount++;
 }
 
-bool Vertex::isConnectedTo(const Vertex* v)
+bool Vertex::isConnectedTo(const std::shared_ptr<Vertex> v)
 {
 	//std::cout << "Checking ID: " << id << " against ID: " << v->id << std::endl;
-	std::vector<Edge>::iterator it;
+	std::vector<std::shared_ptr<Edge>>::iterator it;
 	for (it = edges.begin(); it != edges.end(); it++)
 	{
-		Vertex* currentVertex = (*it).v2;
+		auto currentEdge = *it;
+		std::shared_ptr<Vertex> currentVertex = currentEdge->v2;
 		//std::cout << "     " << currentVertex.id << std::endl;
 		if (currentVertex->id == v->id) return true;
 	}

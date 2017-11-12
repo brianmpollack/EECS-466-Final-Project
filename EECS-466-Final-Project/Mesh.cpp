@@ -13,10 +13,10 @@ Mesh::~Mesh()
 
 void Mesh::calculateQs()
 {
-	for (std::vector<Face>::iterator it = faceList.begin(); it != faceList.end(); it++)
+	for (std::vector<std::shared_ptr<Face>>::iterator it = faceList.begin(); it != faceList.end(); it++)
 	{
-		Face f = *it;
-		f.calculateVertexQsFromThisFace();
+		auto f = *it;
+		f->calculateVertexQsFromThisFace();
 	}
 }
 

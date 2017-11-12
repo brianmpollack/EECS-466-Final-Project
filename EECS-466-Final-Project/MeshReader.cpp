@@ -23,19 +23,19 @@ void MeshReader::draw()
 
 	//int tempSTOP = 0; //TODO: REMOVE
 
-	std::map<int, Vertex>::iterator it; //All vertices
+	std::map<int, std::shared_ptr<Vertex>>::iterator it; //All vertices
 	for (it = mesh.vertList.begin(); it != mesh.vertList.end(); it++)
 	{
-		Vertex v1 = it->second;
+		auto v1 = it->second;
 
-		std::vector<Edge>::iterator it2; //v1's edges
-		for (it2 = v1.edges.begin(); it2 != v1.edges.end(); it2++)
+		std::vector<std::shared_ptr<Edge>>::iterator it2; //v1's edges
+		for (it2 = v1->edges.begin(); it2 != v1->edges.end(); it2++)
 		{
-			Vertex* v2 = (*it2).v2;
-			std::vector<Edge>::iterator it3; //v2's edges
-			for (it3 = it2; it3 != v1.edges.end(); it3++)
+			auto v2 = (*it2)->v2;
+			std::vector<std::shared_ptr<Edge>>::iterator it3; //v2's edges
+			for (it3 = it2; it3 != v1->edges.end(); it3++)
 			{
-				Vertex* v3 = (*it3).v2;
+				auto v3 = (*it3)->v2;
 				//If v3 is connected to v2
 				//std::cout << "V2" << v2.x << "," << "v2.y" << "," << v2.z << std::endl;
 				//Vertex vtest = *v2.connectedVertices[0];
@@ -45,7 +45,7 @@ void MeshReader::draw()
 				{
 					//std::cout << "PRINTING TRIANGLE" << std::endl;
 					glBegin(GL_TRIANGLES);
-					glVertex3f(v1.x, v1.y, v1.z);
+					glVertex3f(v1->x, v1->y, v1->z);
 					glVertex3f(v2->x, v2->y, v2->z);
 					glVertex3f(v3->x, v3->y, v3->z);
 					glEnd();
@@ -125,12 +125,13 @@ void MeshReader::read()
 	for (i = 1; i <= mesh.verts; i++)
 	{
 		fscanf(fp, "%c %f %f %f\n", &letter, &x, &y, &z);
-		mesh.vertList.insert(std::pair <int, Vertex>(i, Vertex(x, y, z, i)));
+		mesh.vertList.insert(std::pair <int, std::shared_ptr<Vertex>>(i, std::make_shared<Vertex>(x, y, z, i)));
+		//auto shared_vertex = std::make_shared<Vertex>(x, y, z, i);
 		//std::cout << "Inserting vertex number" << i << std::endl;
 	}
 
 
-	std::cout << "Vertex numbering test: 3......" << mesh.vertList[3].id << std::endl;
+	std::cout << "Vertex numbering test: 3......" << mesh.vertList[3]->id << std::endl;
 
 	// Read the faces
 	for (i = 0; i < mesh.faces; i++)
@@ -145,42 +146,55 @@ void MeshReader::read()
 		mesh.vertList[iy].connectedVerticesIDs.push_back(iz);
 		mesh.vertList[iz].connectedVerticesIDs.push_back(ix);
 		mesh.vertList[iz].connectedVerticesIDs.push_back(iy);*/
-		mesh.faceList.push_back(Face(&mesh.vertList[ix], &mesh.vertList[iy], &mesh.vertList[iz]));
+		mesh.faceList.push_back(std::make_shared<Face>(Face(mesh.vertList[ix], mesh.vertList[iy], mesh.vertList[iz])));
 		/*mesh.vertList[ix].connectedVertices.push_back(&mesh.vertList[iy]);
 		mesh.vertList[ix].connectedVertices.push_back(&mesh.vertList[iz]);
 		mesh.vertList[iy].connectedVertices.push_back(&mesh.vertList[ix]);
 		mesh.vertList[iy].connectedVertices.push_back(&mesh.vertList[iz]);
 		mesh.vertList[iz].connectedVertices.push_back(&mesh.vertList[ix]);
 		mesh.vertList[iz].connectedVertices.push_back(&mesh.vertList[iy]);*/
-		mesh.vertList[ix].edges.push_back(Edge(&mesh.vertList[ix], &mesh.vertList[iy]));
-		mesh.vertList[ix].edges.push_back(Edge(&mesh.vertList[ix], &mesh.vertList[iz]));
-		mesh.vertList[iy].edges.push_back(Edge(&mesh.vertList[iy], &mesh.vertList[ix]));
-		mesh.vertList[iy].edges.push_back(Edge(&mesh.vertList[iy], &mesh.vertList[iz]));
-		mesh.vertList[iz].edges.push_back(Edge(&mesh.vertList[iz], &mesh.vertList[ix]));
-		mesh.vertList[iz].edges.push_back(Edge(&mesh.vertList[iz], &mesh.vertList[iy]));
+		mesh.vertList[ix]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[ix], mesh.vertList[iy])));
+		mesh.vertList[ix]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[ix], mesh.vertList[iz])));
+		mesh.vertList[iy]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[iy], mesh.vertList[ix])));
+		mesh.vertList[iy]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[iy], mesh.vertList[iz])));
+		mesh.vertList[iz]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[iz], mesh.vertList[ix])));
+		mesh.vertList[iz]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[iz], mesh.vertList[iy])));
 	}
 	fclose(fp);
 
-	/*mesh.calculateQs();
+	mesh.calculateQs();
 
-	std::map<int, Vertex>::iterator it;
+	std::map<int, std::shared_ptr<Vertex>>::iterator it;
 	for (it = mesh.vertList.begin(); it != mesh.vertList.end(); it++)
 	{
-		Vertex currentVertex = it->second;
-		std::vector<Edge>::iterator edgeIterator;
-		for (edgeIterator = currentVertex.edges.begin(); edgeIterator != currentVertex.edges.end(); edgeIterator++)
+		auto currentVertex = it->second;
+		std::vector<std::shared_ptr<Edge>>::iterator edgeIterator;
+		for (edgeIterator = currentVertex->edges.begin(); edgeIterator != currentVertex->edges.end(); edgeIterator++)
 		{
 			//Vertex* currentConnectedVertex = (*edgeIterator).v2;
-			Edge* e = &*edgeIterator;
+
+			auto e = *edgeIterator;
 			e->calculateV();
 			e->calculateCost();
+			//e->cost = 1234;
 			mesh.edgeQueue.push(e);
+			//Edge eTest2 = *mesh.edgeQueue.top();
+			//eTest2.cost = 1234;
+			//std::cout << "Edge Queue Test: " << mesh.edgeQueue.top()->cost << std::endl;
+			//mesh.edgeQueue.pop();
 		}
 	}
 
-	std::cout << "Edge Queue Test: " << mesh.edgeQueue.top()->cost << std::endl;
+	std::cout << "Edge Queue Test: " << mesh.vertList[33]->edges[0]->cost << std::endl;
 
-	mesh.delFace = (int)((1 - mesh.ratio) * mesh.faces);*/
+	for (int testEdgeQueue = 0; testEdgeQueue < 30; testEdgeQueue++)
+	{
+		std::cout << "Edge Queue Test: " << mesh.edgeQueue.top()->cost << std::endl;
+		mesh.edgeQueue.pop();
+	}
+	
+
+	mesh.delFace = (int)((1 - mesh.ratio) * mesh.faces);
 	
 
 	//for (std::vector<Edge>::iterator it = tempEdge.begin(); it != tempEdge.end(); it++)
