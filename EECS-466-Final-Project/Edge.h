@@ -20,11 +20,20 @@ public:
 	void calculateCost();
 };
 
-class EdgeComparison
+class EdgeComparisonMinPriorityQueue
 {
 public:
 	bool operator() (std::shared_ptr<Edge> v1, std::shared_ptr<Edge> v2)
 	{
 		return v1->cost > v2->cost;
+	}
+};
+
+class EdgeComparitor
+{
+public:
+	bool operator() (const std::shared_ptr<Edge> v1, const std::shared_ptr<Edge> v2)
+	{
+		return v1->cost < v2->cost;
 	}
 };

@@ -23,7 +23,7 @@ void MeshReader::draw()
 
 	//int tempSTOP = 0; //TODO: REMOVE
 	int numFacesPrinted = 0;
-
+/*
 	std::map<int, std::shared_ptr<Vertex>>::iterator it; //All vertices
 	for (it = mesh.vertList.begin(); it != mesh.vertList.end(); it++)
 	{
@@ -58,6 +58,17 @@ void MeshReader::draw()
 				//tempSTOP ++ ;
 			}
 		}
+	}
+	std::cout << "NUM FACES PRINTED: " << numFacesPrinted << std::endl;*/
+
+	for (auto face : mesh.faceList)
+	{
+		glBegin(GL_TRIANGLES);
+		glVertex3f(face->v1->x, face->v1->y, face->v1->z);
+		glVertex3f(face->v2->x, face->v2->y, face->v2->z);
+		glVertex3f(face->v3->x, face->v3->y, face->v3->z);
+		glEnd();
+		numFacesPrinted++;
 	}
 	std::cout << "NUM FACES PRINTED: " << numFacesPrinted << std::endl;
 	// for (int i = 0; i < mesh.faces; i++)
@@ -142,15 +153,7 @@ void MeshReader::read()
 	for (i = 0; i < mesh.faces; i++)
 	{
 		fscanf(fp, "%c %d %d %d\n", &letter, &ix, &iy, &iz);
-		/*mesh.faceList[i].v1 = ix - 1;
-		mesh.faceList[i].v2 = iy - 1;
-		mesh.faceList[i].v3 = iz - 1;*/
-		/*mesh.vertList[ix].connectedVerticesIDs.push_back(iy);
-		mesh.vertList[ix].connectedVerticesIDs.push_back(iz);
-		mesh.vertList[iy].connectedVerticesIDs.push_back(ix);
-		mesh.vertList[iy].connectedVerticesIDs.push_back(iz);
-		mesh.vertList[iz].connectedVerticesIDs.push_back(ix);
-		mesh.vertList[iz].connectedVerticesIDs.push_back(iy);*/
+		
 		mesh.faceList.push_back(std::make_shared<Face>(Face(mesh.vertList[ix], mesh.vertList[iy], mesh.vertList[iz])));
 		/*mesh.vertList[ix].connectedVertices.push_back(&mesh.vertList[iy]);
 		mesh.vertList[ix].connectedVertices.push_back(&mesh.vertList[iz]);
@@ -167,72 +170,10 @@ void MeshReader::read()
 	}
 	fclose(fp);
 
-	mesh.calculateQs();
-
-	std::map<int, std::shared_ptr<Vertex>>::iterator it;
-	for (it = mesh.vertList.begin(); it != mesh.vertList.end(); it++)
-	{
-		auto currentVertex = it->second;
-		std::vector<std::shared_ptr<Edge>>::iterator edgeIterator;
-		for (edgeIterator = currentVertex->edges.begin(); edgeIterator != currentVertex->edges.end(); edgeIterator++)
-		{
-			auto e = *edgeIterator;
-			e->calculateV();
-			e->calculateCost();
-			mesh.edgeQueue.push(e);
-		}
-	}
-
-	//std::cout << "Edge Queue Test: " << mesh.vertList[33]->edges[0]->cost << std::endl;
-
-	//for (int testEdgeQueue = 0; testEdgeQueue < mesh.faces; testEdgeQueue++)
-	/*while(!mesh.edgeQueue.empty())
-	{
-		std::cout << "Edge Queue Test: " << mesh.edgeQueue.top()->cost << std::endl;
-		mesh.edgeQueue.pop();
-	}*/
 	
 
-	mesh.delFace = (int)((1 - mesh.ratio) * mesh.faces);
+	
 	mesh.reduce();
 	std::cout << "DONE REDUCING" << std::endl;
 
-	//for (std::vector<Edge>::iterator it = tempEdge.begin(); it != tempEdge.end(); it++)
-	//{
-	//	Edge e = *it;
-	//	e.calculateV();
-	//}
-
-
-	// The part below calculates the normals of each vertex
-
-	/*for (i = 0; i < mesh.faces; i++)
-	{
-		v1.x = mesh.vertList[mesh.faceList[i].v2].x - mesh.vertList[mesh.faceList[i].v1].x;
-		v1.y = mesh.vertList[mesh.faceList[i].v2].y - mesh.vertList[mesh.faceList[i].v1].y;
-		v1.z = mesh.vertList[mesh.faceList[i].v2].z - mesh.vertList[mesh.faceList[i].v1].z;
-		v2.x = mesh.vertList[mesh.faceList[i].v3].x - mesh.vertList[mesh.faceList[i].v2].x;
-		v2.y = mesh.vertList[mesh.faceList[i].v3].y - mesh.vertList[mesh.faceList[i].v2].y;
-		v2.z = mesh.vertList[mesh.faceList[i].v3].z - mesh.vertList[mesh.faceList[i].v2].z;
-
-		crossP.x = v1.y*v2.z - v1.z*v2.y;
-		crossP.y = v1.z*v2.x - v1.x*v2.z;
-		crossP.z = v1.x*v2.y - v1.y*v2.x;
-
-		len = sqrt(crossP.x*crossP.x + crossP.y*crossP.y + crossP.z*crossP.z);
-
-		crossP.x = -crossP.x / len;
-		crossP.y = -crossP.y / len;
-		crossP.z = -crossP.z / len;
-
-		mesh.vertList[mesh.faceList[i].v1].addNormal(crossP.x, crossP.y, crossP.z);
-		mesh.vertList[mesh.faceList[i].v2].addNormal(crossP.x, crossP.y, crossP.z);
-		mesh.vertList[mesh.faceList[i].v3].addNormal(crossP.x, crossP.y, crossP.z);
-	}*/
-	/*for (i = 0; i < mesh.verts; i++)
-	{
-		mesh.vertList[i].normX = (float)sign*mesh.vertList[i].normX / mesh.vertList[i].normCount;
-		mesh.vertList[i].normY = (float)sign*mesh.vertList[i].normX / mesh.vertList[i].normCount;
-		mesh.vertList[i].normZ = (float)sign*mesh.vertList[i].normX / mesh.vertList[i].normCount;
-	}*/
 }

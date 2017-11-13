@@ -4,8 +4,18 @@
 
 Edge::Edge(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2)
 {
-	this->v1 = v1;
-	this->v2 = v2;
+	//Enforce edge v1 always < v2
+	if (v1->id < v2->id)
+	{
+		this->v1 = v1;
+		this->v2 = v2;
+	}
+	else
+	{
+		this->v1 = v2;
+		this->v2 = v1;
+	}
+	
 }
 
 

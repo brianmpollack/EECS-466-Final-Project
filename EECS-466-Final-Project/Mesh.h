@@ -6,6 +6,9 @@
 
 class Mesh
 {
+private:
+	std::vector<std::shared_ptr<Edge>> selectValidEdges();
+	std::priority_queue<std::shared_ptr<Edge>, std::vector<std::shared_ptr<Edge>>, EdgeComparisonMinPriorityQueue> computeContractionTargets(std::vector<std::shared_ptr<Edge>> validEdges);
 public:
 	double ratio = .6;
 	int delFace;
@@ -14,7 +17,6 @@ public:
 	std::map<int, std::shared_ptr<Vertex>> vertList;
 	//faceStruct *faceList;
 	std::vector<std::shared_ptr<Face>> faceList;
-	std::priority_queue<std::shared_ptr<Edge>, std::vector<std::shared_ptr<Edge>>, EdgeComparison> edgeQueue;
 	Mesh();
 	~Mesh();
 	void calculateQs();

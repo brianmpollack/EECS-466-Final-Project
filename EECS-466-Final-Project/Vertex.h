@@ -12,6 +12,7 @@ public:
 	bool isDeleted = false;
 	//std::vector<Vertex*> connectedVertices;
 	std::vector<std::shared_ptr<Edge>> edges;
+	//std::set<std::shared_ptr<Edge>, EdgeComparitor> edges;
 	Vertex();
 	Vertex(float x, float y, float z, int id);
 	~Vertex();
