@@ -14,26 +14,22 @@ public:
 	~Edge();
 	//bool operator >(Edge const& e);
 	//friend bool operator >(Edge const& e1, Edge const& e2);
-	//bool operator <(Edge const& e);
+	bool operator <(Edge const& e);
 	//bool operator =(Edge const& e);
 	void calculateV();
 	void calculateCost();
 };
-
-class EdgeComparisonMinPriorityQueue
+struct CompareEdgesInSharedPointer
 {
-public:
-	bool operator() (std::shared_ptr<Edge> v1, std::shared_ptr<Edge> v2)
+	bool operator() (const std::shared_ptr<Edge>& a, const std::shared_ptr<Edge>& b)
 	{
-		return v1->cost > v2->cost;
+		return *a < *b;
 	}
 };
-
-class EdgeComparitor
+struct CompareEdgesByCost
 {
-public:
-	bool operator() (const std::shared_ptr<Edge> v1, const std::shared_ptr<Edge> v2)
+	bool operator() (const std::shared_ptr<Edge>& a, const std::shared_ptr<Edge>& b)
 	{
-		return v1->cost < v2->cost;
+		return (*a).cost > (*b).cost;
 	}
 };

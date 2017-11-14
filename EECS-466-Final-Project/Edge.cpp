@@ -4,24 +4,15 @@
 
 Edge::Edge(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2)
 {
-	//Enforce edge v1 always < v2
-	if (v1->id < v2->id)
-	{
-		this->v1 = v1;
-		this->v2 = v2;
-	}
-	else
-	{
-		this->v1 = v2;
-		this->v2 = v1;
-	}
-	
+	this->v1 = v1;
+	this->v2 = v2;	
 }
 
 
 Edge::~Edge()
 {
 }
+
 
 /*bool Edge::operator >(Edge const& e)
 {
@@ -31,10 +22,23 @@ Edge::~Edge()
 {
 	return e1.cost > e2.cost;
 }*/
-/*bool Edge::operator <(Edge const& e)
+bool Edge::operator <(Edge const& e)
 {
-	return this->cost < e.cost;
-}*/
+	Vertex thisV1 = min(*(this->v1), *(this->v2));
+	Vertex thisV2 = max(*(this->v1), *(this->v2));
+	Vertex otherV1 = min(*e.v1, *e.v2);
+	Vertex otherV2 = max(*e.v1, *e.v2);
+	//return (min(thisV1, thisV2) < min(v1, v2)) && (max(thisV1, thisV2) < max(v1, v2));
+	//return min(thisV1, thisV2).id * 10000 < min(v1, v2).id;
+	if (thisV1 < otherV1)
+		return true;
+	if (otherV1 < thisV1)
+		return false;
+
+	if (thisV2 < otherV2)
+		return true;
+	return false;
+}
 /*bool Edge::operator =(Edge const& e)
 {
 	return this->cost = e.cost;

@@ -63,6 +63,7 @@ void MeshReader::draw()
 
 	for (auto face : mesh.faceList)
 	{
+		if (face->deleted == true) continue;
 		glBegin(GL_TRIANGLES);
 		glVertex3f(face->v1->x, face->v1->y, face->v1->z);
 		glVertex3f(face->v2->x, face->v2->y, face->v2->z);
@@ -161,12 +162,18 @@ void MeshReader::read()
 		mesh.vertList[iy].connectedVertices.push_back(&mesh.vertList[iz]);
 		mesh.vertList[iz].connectedVertices.push_back(&mesh.vertList[ix]);
 		mesh.vertList[iz].connectedVertices.push_back(&mesh.vertList[iy]);*/
-		mesh.vertList[ix]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[ix], mesh.vertList[iy])));
+		/*mesh.vertList[ix]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[ix], mesh.vertList[iy])));
 		mesh.vertList[ix]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[ix], mesh.vertList[iz])));
 		mesh.vertList[iy]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[iy], mesh.vertList[ix])));
 		mesh.vertList[iy]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[iy], mesh.vertList[iz])));
 		mesh.vertList[iz]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[iz], mesh.vertList[ix])));
-		mesh.vertList[iz]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[iz], mesh.vertList[iy])));
+		mesh.vertList[iz]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[iz], mesh.vertList[iy])));*/
+		mesh.vertList[ix]->neighboringVertices.insert(std::pair<int, std::shared_ptr<Vertex>>(iy, mesh.vertList[iy]));
+		mesh.vertList[ix]->neighboringVertices.insert(std::pair<int, std::shared_ptr<Vertex>>(iz, mesh.vertList[iz]));
+		mesh.vertList[iy]->neighboringVertices.insert(std::pair<int, std::shared_ptr<Vertex>>(ix, mesh.vertList[ix]));
+		mesh.vertList[iy]->neighboringVertices.insert(std::pair<int, std::shared_ptr<Vertex>>(iz, mesh.vertList[iz]));
+		mesh.vertList[iz]->neighboringVertices.insert(std::pair<int, std::shared_ptr<Vertex>>(ix, mesh.vertList[ix]));
+		mesh.vertList[iz]->neighboringVertices.insert(std::pair<int, std::shared_ptr<Vertex>>(iy, mesh.vertList[iy]));
 	}
 	fclose(fp);
 

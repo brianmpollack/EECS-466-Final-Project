@@ -11,11 +11,14 @@ public:
 	int normCount=0;
 	bool isDeleted = false;
 	//std::vector<Vertex*> connectedVertices;
-	std::vector<std::shared_ptr<Edge>> edges;
+	//std::vector<std::shared_ptr<Edge>> edges;
+	std::map<int, std::shared_ptr<Vertex>> neighboringVertices;
 	//std::set<std::shared_ptr<Edge>, EdgeComparitor> edges;
 	Vertex();
 	Vertex(float x, float y, float z, int id);
 	~Vertex();
+	bool operator<(Vertex const& v) const;
+	bool operator>(Vertex const& v) const;
 	//void initialize(float x, float y, float z);
 	void addNormal(float x, float y, float z);
 	FourMatrix Q;

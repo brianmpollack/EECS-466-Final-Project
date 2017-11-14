@@ -7,11 +7,15 @@
 class Face
 {
 public:
+	bool deleted = false;
 	std::shared_ptr<Vertex> v1;
 	std::shared_ptr<Vertex> v2;
 	std::shared_ptr<Vertex> v3;
 	Face(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2, std::shared_ptr<Vertex> v3);
 	~Face();
 	void calculateVertexQsFromThisFace();
+	bool contains(const std::shared_ptr<Vertex> v) const;
+	void deleteFace();
+	void replace(const std::shared_ptr<Vertex> replace, const std::shared_ptr<Vertex> with);
 };
 

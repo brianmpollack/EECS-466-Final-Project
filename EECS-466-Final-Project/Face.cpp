@@ -37,3 +37,25 @@ void Face::calculateVertexQsFromThisFace()
 		}
 	}
 }
+
+bool Face::contains(const std::shared_ptr<Vertex> v) const
+{
+	if ((v1->id == v->id) || (v2->id == v->id) || (v3->id == v->id))
+		return true;
+	return false;
+}
+
+void Face::deleteFace()
+{
+	this->deleted = true;
+}
+
+void Face::replace(const std::shared_ptr<Vertex> replace, const std::shared_ptr<Vertex> with)
+{
+	if (this->v1->id == replace->id)
+		this->v1 = with;
+	else if (this->v2->id == replace->id)
+		this->v2 = with;
+	else if (this->v3->id == replace->id)
+		this->v3 = with;
+}
