@@ -20,39 +20,12 @@ Vertex::~Vertex()
 {
 }
 
-/*void Vertex::initialize(float x, float y, float z)
-{
-	this->x = x;
-	this->y = y;
-	this->z = z;
-}*/
-
 void Vertex::addNormal(float x, float y, float z)
 {
 	this->normX += x;
 	this->normY += y;
 	this->normZ += z;
 	this->normCount++;
-}
-
-/*bool Vertex::isConnectedTo(const std::shared_ptr<Vertex> v)
-{
-	//std::cout << "Checking ID: " << id << " against ID: " << v->id << std::endl;
-	std::vector<std::shared_ptr<Edge>>::iterator it;
-	for (it = edges.begin(); it != edges.end(); it++)
-	{
-		auto currentEdge = *it;
-		std::shared_ptr<Vertex> currentVertex = currentEdge->v2;
-		//std::cout << "     " << currentVertex.id << std::endl;
-		if (currentVertex->id == v->id) return true;
-	}
-	return false;
-}*/
-
-bool Vertex::isConnectedTo(const std::shared_ptr<Vertex> v)
-{
-	std::map<int, std::shared_ptr<Vertex>>::iterator iterator = neighboringVertices.find(v->id);
-	return iterator != neighboringVertices.end();
 }
 
 bool Vertex::operator<(Vertex const& v) const

@@ -156,24 +156,6 @@ void MeshReader::read()
 		fscanf(fp, "%c %d %d %d\n", &letter, &ix, &iy, &iz);
 		
 		mesh.faceList.push_back(std::make_shared<Face>(Face(mesh.vertList[ix], mesh.vertList[iy], mesh.vertList[iz])));
-		/*mesh.vertList[ix].connectedVertices.push_back(&mesh.vertList[iy]);
-		mesh.vertList[ix].connectedVertices.push_back(&mesh.vertList[iz]);
-		mesh.vertList[iy].connectedVertices.push_back(&mesh.vertList[ix]);
-		mesh.vertList[iy].connectedVertices.push_back(&mesh.vertList[iz]);
-		mesh.vertList[iz].connectedVertices.push_back(&mesh.vertList[ix]);
-		mesh.vertList[iz].connectedVertices.push_back(&mesh.vertList[iy]);*/
-		/*mesh.vertList[ix]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[ix], mesh.vertList[iy])));
-		mesh.vertList[ix]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[ix], mesh.vertList[iz])));
-		mesh.vertList[iy]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[iy], mesh.vertList[ix])));
-		mesh.vertList[iy]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[iy], mesh.vertList[iz])));
-		mesh.vertList[iz]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[iz], mesh.vertList[ix])));
-		mesh.vertList[iz]->edges.push_back(std::make_shared<Edge>(Edge(mesh.vertList[iz], mesh.vertList[iy])));*/
-		mesh.vertList[ix]->neighboringVertices.insert(std::pair<int, std::shared_ptr<Vertex>>(iy, mesh.vertList[iy]));
-		mesh.vertList[ix]->neighboringVertices.insert(std::pair<int, std::shared_ptr<Vertex>>(iz, mesh.vertList[iz]));
-		mesh.vertList[iy]->neighboringVertices.insert(std::pair<int, std::shared_ptr<Vertex>>(ix, mesh.vertList[ix]));
-		mesh.vertList[iy]->neighboringVertices.insert(std::pair<int, std::shared_ptr<Vertex>>(iz, mesh.vertList[iz]));
-		mesh.vertList[iz]->neighboringVertices.insert(std::pair<int, std::shared_ptr<Vertex>>(ix, mesh.vertList[ix]));
-		mesh.vertList[iz]->neighboringVertices.insert(std::pair<int, std::shared_ptr<Vertex>>(iy, mesh.vertList[iy]));
 	}
 	fclose(fp);
 

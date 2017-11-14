@@ -10,10 +10,7 @@ public:
 	float normX=0, normY=0, normZ=0;
 	int normCount=0;
 	bool isDeleted = false;
-	//std::vector<Vertex*> connectedVertices;
-	//std::vector<std::shared_ptr<Edge>> edges;
-	std::map<int, std::shared_ptr<Vertex>> neighboringVertices;
-	//std::set<std::shared_ptr<Edge>, EdgeComparitor> edges;
+	//std::map<int, std::shared_ptr<Vertex>> neighboringVertices;
 	Vertex();
 	Vertex(float x, float y, float z, int id);
 	~Vertex();
@@ -22,5 +19,4 @@ public:
 	//void initialize(float x, float y, float z);
 	void addNormal(float x, float y, float z);
 	FourMatrix Q;
-	bool isConnectedTo(const std::shared_ptr<Vertex> v);
 };
