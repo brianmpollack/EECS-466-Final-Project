@@ -4,6 +4,9 @@
 
 class Edge
 {
+private:
+	void calculateV();
+	void calculateCost();
 public:
 	std::shared_ptr<Vertex> v1;
 	std::shared_ptr<Vertex> v2;
@@ -16,8 +19,10 @@ public:
 	//friend bool operator >(Edge const& e1, Edge const& e2);
 	bool operator <(Edge const& e);
 	//bool operator =(Edge const& e);
-	void calculateV();
-	void calculateCost();
+	
+	bool contains(const std::shared_ptr<Vertex> v) const;
+	
+	bool CompareEdgesByCost(const std::shared_ptr<Edge>& a, const std::shared_ptr<Edge>& b);
 };
 struct CompareEdgesInSharedPointer
 {
@@ -26,10 +31,10 @@ struct CompareEdgesInSharedPointer
 		return *a < *b;
 	}
 };
-struct CompareEdgesByCost
+/*struct CompareEdgesByCost
 {
 	bool operator() (const std::shared_ptr<Edge>& a, const std::shared_ptr<Edge>& b)
 	{
-		return (*a).cost > (*b).cost;
+		return (*a).cost < (*b).cost;
 	}
-};
+};*/

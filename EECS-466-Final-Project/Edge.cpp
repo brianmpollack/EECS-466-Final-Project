@@ -6,6 +6,8 @@ Edge::Edge(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2)
 {
 	this->v1 = v1;
 	this->v2 = v2;	
+	this->calculateV();
+	this->calculateCost();
 }
 
 
@@ -90,4 +92,16 @@ void Edge::calculateCost()
 		}
 		this->cost += temp_cost * V_vec4[i];
 	}
+}
+
+bool Edge::contains(const std::shared_ptr<Vertex> v) const
+{
+	if ((v1->id == v->id) || (v2->id == v->id))
+		return true;
+	return false;
+}
+
+bool Edge::CompareEdgesByCost(const std::shared_ptr<Edge>& a, const std::shared_ptr<Edge>& b)
+{
+	return (*a).cost < (*b).cost;
 }
