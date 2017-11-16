@@ -14,7 +14,6 @@ public:
 	Face(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2, std::shared_ptr<Vertex> v3);
 	~Face();
 	void calculateVertexQsFromThisFace();
-	void removeVertexQsFromThisFace();
 	bool contains(const std::shared_ptr<Vertex> v) const;
 	void deleteFace();
 	bool replace(const std::shared_ptr<Vertex> replace, const std::shared_ptr<Vertex> with);

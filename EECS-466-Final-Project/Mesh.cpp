@@ -21,56 +21,27 @@ void Mesh::calculateQs()
 	for (std::vector<std::shared_ptr<Face>>::iterator it = faceList.begin(); it != faceList.end(); it++)
 	{
 		auto f = *it;
-		f->calculateVertexQsFromThisFace();
+		if (f->deleted == false)
+			f->calculateVertexQsFromThisFace();
 	}
 }
 
 void Mesh::reduce()
 {
 	// Step 1 - calculate Q matrices
+	calculateQs(); // Step 1 - calculate Q matrices
 
 	auto validEdges = selectValidEdges(); // Step 2 - select all valid pairs
 
-	/*for (auto curredge : validEdges)
-	{
-		std::cout << "Init cost: " << curredge->cost << std::endl;
-	}*/
-
-
-	//std::cout << "EDGES: " << validEdges.size() << std::endl;
-
-	//auto edgeQueue = computeContractionTargets(validEdges); // Step 3, 4 - Compute optimal contraction targets and their errors
-
 	for (int i = 0; i < 1000; i++)
 	{
-		//std::cout << "Loop starting" << std::endl;
-		calculateQs();
-		for (auto curredge : validEdges)
+		
+		for (auto curredge : validEdges) //TODO: Remove
 		{
-			curredge->calculateV();
-			curredge->calculateCost();
 			if (curredge->cost < -1)
 				std::cout << "Edge cost: " << curredge->cost << std::endl;
 		}
-		//std::cout << "VALID EDGES BEFORE CONTRACTION: " << validEdges.size() << std::endl;
-
-		/*validEdgesSet::iterator testiter = validEdges.begin();
-		for (; testiter != validEdges.end(); ++testiter)
-		{
-			auto tempEdge = *testiter;
-			if (tempEdge->v1->id == 333 && tempEdge->v2->id == 334)
-			{
-				std::cout << "Cost from Outside: " << tempEdge->cost << std::endl;
-				//std::cout << tempEdge << std::endl;
-				break;
-			}
-		}*/
-		//std::cout << "Looking at edge: " << (validEdges.begin());
 		contractEdge(validEdges);
-
-		//std::cout << "VALID EDGES AFTER CONTRACTION: " << validEdges.size() << std::endl;
-		//auto validEdges2 = selectValidEdges();
-		//std::cout << "NEW VALID EDGES SET AFTER CONTRACTION: " << validEdges2.size() << std::endl;
 	}
 
 	
@@ -88,46 +59,23 @@ void Mesh::contractEdge(validEdgesSet &edgesSet)
 	auto v2 = edge_with_minimum_cost->v2;
 	auto v = edge_with_minimum_cost->v;
 
-
-	/*validEdgesSet::iterator testiter = edgesSet.begin();
-	for (; testiter != edgesSet.end(); ++testiter)
-	{
-		auto tempEdge = *testiter;
-		if (tempEdge->v1->id == 333 && tempEdge->v2->id == 334)
-		{
-			std::cout << "Cost from Inside: " << tempEdge->cost << std::endl;
-			//std::cout << tempEdge << std::endl;
-			break;
-		}
-	}*/
-
 	std::cout << "Contracting: V1 " << edge_with_minimum_cost->v1->id << " V2 " << edge_with_minimum_cost->v2->id << std::endl;;
 
 
 	//std::cout << "Cost: " << edge_with_minimum_cost->cost << std::endl;
-	if (edge_with_minimum_cost->cost < -1)
-	{
-		std::cout << "Hi";
-	}
+
 
 	//Make vertex for V
 	auto v_vertex = this->create_vertex(v);
 
 	//Delete all edges that have vertex V
 	validEdgesSet::iterator edge_check_remove_v_v1_iterator = edgesSet.begin();
-	//for (auto edge_check_remove_v_v1 : edgesSet)
 	while (edge_check_remove_v_v1_iterator != edgesSet.end())
 	{
 		auto edge_check_remove_v_v1 = *edge_check_remove_v_v1_iterator;
-		if (edge_check_remove_v_v1->contains(v1))
+		if (edge_check_remove_v_v1->contains(v1) || edge_check_remove_v_v1->contains(v2))
 		{
 			edge_check_remove_v_v1_iterator = edgesSet.erase(edge_check_remove_v_v1_iterator);
-			//std::cout << "Contains V1" << std::endl;
-		}
-		else if (edge_check_remove_v_v1->contains(v2))
-		{
-			edge_check_remove_v_v1_iterator = edgesSet.erase(edge_check_remove_v_v1_iterator);
-			//std::cout << "Contains V2" << std::endl;
 		}
 		else
 		{
@@ -164,6 +112,16 @@ void Mesh::contractEdge(validEdgesSet &edgesSet)
 			//std::cout << "Updated face" << std::endl;
 		}
 	}
+	calculateQs();
+	for (auto edge_update_v_and_cost : edgesSet)
+	{
+		if (edge_update_v_and_cost->contains(v_vertex))
+		{
+			edge_update_v_and_cost->calculateV();
+			edge_update_v_and_cost->calculateCost();
+			
+		}
+	}
 }
 
 validEdgesSet Mesh::selectValidEdges()
@@ -180,18 +138,6 @@ validEdgesSet Mesh::selectValidEdges()
 	}
 	return validEdges;
 }
-
-/*contractionTargetsPriorityQueue Mesh::computeContractionTargets(validEdgesSet validEdges)
-{
-	contractionTargetsPriorityQueue edgeQueue;
-	for (auto currentEdge : validEdges)
-	{
-		currentEdge->calculateV();
-		currentEdge->calculateCost();
-		edgeQueue.push(currentEdge);
-	}
-	return edgeQueue;
-}*/
 
 std::shared_ptr<Vertex> Mesh::create_vertex(Vector3& v)
 {

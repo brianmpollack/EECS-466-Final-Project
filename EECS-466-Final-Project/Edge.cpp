@@ -6,6 +6,8 @@ Edge::Edge(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2)
 {
 	this->v1 = v1;
 	this->v2 = v2;	
+	this->calculateV();
+	this->calculateCost();
 }
 
 
