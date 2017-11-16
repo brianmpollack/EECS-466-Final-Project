@@ -41,9 +41,9 @@ void Mesh::reduce()
 
 	//auto edgeQueue = computeContractionTargets(validEdges); // Step 3, 4 - Compute optimal contraction targets and their errors
 
-	for (int i = 0; i < 200; i++)
+	for (int i = 0; i < 1000; i++)
 	{
-		std::cout << "Loop starting" << std::endl;
+		//std::cout << "Loop starting" << std::endl;
 		calculateQs();
 		for (auto curredge : validEdges)
 		{
@@ -101,7 +101,7 @@ void Mesh::contractEdge(validEdgesSet &edgesSet)
 		}
 	}*/
 
-	//std::cout << "Contracting: V1 " << edge_with_minimum_cost->v1->id << " V2 " << edge_with_minimum_cost->v2->id << std::endl;;
+	std::cout << "Contracting: V1 " << edge_with_minimum_cost->v1->id << " V2 " << edge_with_minimum_cost->v2->id << std::endl;;
 
 
 	//std::cout << "Cost: " << edge_with_minimum_cost->cost << std::endl;
