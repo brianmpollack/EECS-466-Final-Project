@@ -4,10 +4,9 @@
 
 class Edge
 {
-private:
+public:
 	void calculateV();
 	void calculateCost();
-public:
 	std::shared_ptr<Vertex> v1;
 	std::shared_ptr<Vertex> v2;
 	double cost = 100000; //TODO this should be 0 I believe?

@@ -72,30 +72,30 @@ bool Face::contains(const std::shared_ptr<Vertex> v) const
 void Face::deleteFace()
 {
 	this->deleted = true;
-	this->removeVertexQsFromThisFace();
+	//this->removeVertexQsFromThisFace();
 }
 
 bool Face::replace(const std::shared_ptr<Vertex> replace, const std::shared_ptr<Vertex> with)
 {
 	if (this->v1->id == replace->id)
 	{
-		removeVertexQsFromThisFace();
+		//removeVertexQsFromThisFace();
 		this->v1 = with;
-		calculateVertexQsFromThisFace();
+		//calculateVertexQsFromThisFace();
 		return true;
 	}
 	else if (this->v2->id == replace->id)
 	{
-		removeVertexQsFromThisFace();
+		//removeVertexQsFromThisFace();
 		this->v2 = with;
-		calculateVertexQsFromThisFace();
+		//calculateVertexQsFromThisFace();
 		return true;
 	}
 	else if (this->v3->id == replace->id)
 	{
-		removeVertexQsFromThisFace();
+		//removeVertexQsFromThisFace();
 		this->v3 = with;
-		calculateVertexQsFromThisFace();
+		//calculateVertexQsFromThisFace();
 		return true;
 	}
 	return false;

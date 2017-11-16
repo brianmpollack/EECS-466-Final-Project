@@ -14,6 +14,7 @@ private:
 	//contractionTargetsPriorityQueue computeContractionTargets(validEdgesSet validEdges);
 	void contractEdge(validEdgesSet &edgesSet);
 	std::shared_ptr<Vertex> create_vertex(Vector3& v);
+	std::pair<validEdgesSet::iterator, std::shared_ptr<Edge>> get_lowest_cost_edge(validEdgesSet &edgesSet);
 public:
 	double ratio = .6;
 	int delFace;

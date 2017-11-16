@@ -12,5 +12,6 @@ public:
 	FourMatrix operator * (const double d) const;
 	Vector4 operator * (Vector4 v) const;
 	FourMatrix inverse() const;
+	void reset();
 };
 
