@@ -159,10 +159,4 @@ void MeshReader::read()
 	}
 	fclose(fp);
 
-	
-
-	
-	mesh.reduce();
-	std::cout << "DONE REDUCING" << std::endl;
-
 }

@@ -159,6 +159,7 @@
     <ClInclude Include="Face.h" />
     <ClInclude Include="ferris_wheel.h" />
     <ClInclude Include="FourMatrix.h" />
+    <ClInclude Include="Helicopter.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshReader.h" />
     <ClInclude Include="ThreeMatrix.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="Face.cpp" />
     <ClCompile Include="ferris_wheel.cpp" />
     <ClCompile Include="FourMatrix.cpp" />
+    <ClCompile Include="Helicopter.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshReader.cpp" />
     <ClCompile Include="ThreeMatrix.cpp" />

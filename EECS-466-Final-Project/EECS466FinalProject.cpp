@@ -1,5 +1,6 @@
 #pragma once
 #include "common.h"
+//#include "Helicopter.h"
 #include "ferris_wheel.h"
 
 /* ---GLOBALS--- */
@@ -11,7 +12,8 @@ int MouseX = 0;
 int MouseY = 0;
 bool MouseLeft = false;
 bool MouseRight = false;
-FerrisWheel ferris_wheel = FerrisWheel(4);
+//Helicopter helicopter = Helicopter();
+FerrisWheel ferris_wheel = FerrisWheel(1.0); //TODO: Change radius
 /* ---GLOBALS--- */
 
 void ReshapeFunc(int x, int y)
@@ -94,10 +96,8 @@ void display(void) {
 	//glEnable(GL_DEPTH_TEST);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	//DRAW FERRIS WHEEL BOXES
 	ferris_wheel.draw();
 
-	//END DRAW FERRIS WHEEL
 
 	glutSwapBuffers();
 }

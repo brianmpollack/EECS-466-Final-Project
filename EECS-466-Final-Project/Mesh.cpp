@@ -33,14 +33,8 @@ void Mesh::reduce()
 
 	auto validEdges = selectValidEdges(); // Step 2 - select all valid pairs
 
-	for (int i = 0; i < 1000; i++)
+	while(validEdges.size() > 300)
 	{
-		
-		for (auto curredge : validEdges) //TODO: Remove
-		{
-			if (curredge->cost < -1)
-				std::cout << "Edge cost: " << curredge->cost << std::endl;
-		}
 		contractEdge(validEdges);
 	}
 
@@ -58,12 +52,6 @@ void Mesh::contractEdge(validEdgesSet &edgesSet)
 	auto v1 = edge_with_minimum_cost->v1;
 	auto v2 = edge_with_minimum_cost->v2;
 	auto v = edge_with_minimum_cost->v;
-
-	std::cout << "Contracting: V1 " << edge_with_minimum_cost->v1->id << " V2 " << edge_with_minimum_cost->v2->id << std::endl;;
-
-
-	//std::cout << "Cost: " << edge_with_minimum_cost->cost << std::endl;
-
 
 	//Make vertex for V
 	auto v_vertex = this->create_vertex(v);
