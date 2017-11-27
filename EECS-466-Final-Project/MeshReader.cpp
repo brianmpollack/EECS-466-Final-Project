@@ -16,7 +16,7 @@ void MeshReader::collapse()
 
 }
 
-void MeshReader::draw()
+void MeshReader::draw(float x_trans, float y_trans)
 {
 	//std::cout << "DRAWING MESH" << std::endl;
 	glColor3f(1, 0, 0);
@@ -65,9 +65,9 @@ void MeshReader::draw()
 	{
 		if (face->deleted == true) continue;
 		glBegin(GL_TRIANGLES);
-		glVertex3f(face->v1->x, face->v1->y, face->v1->z);
-		glVertex3f(face->v2->x, face->v2->y, face->v2->z);
-		glVertex3f(face->v3->x, face->v3->y, face->v3->z);
+		glVertex3f(face->v1->x + x_trans, face->v1->y, face->v1->z + y_trans);
+		glVertex3f(face->v2->x + x_trans, face->v2->y, face->v2->z + y_trans);
+		glVertex3f(face->v3->x + x_trans, face->v3->y, face->v3->z + y_trans);
 		glEnd();
 		numFacesPrinted++;
 	}
