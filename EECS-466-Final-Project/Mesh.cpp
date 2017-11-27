@@ -32,10 +32,12 @@ void Mesh::reduce()
 	calculateQs(); // Step 1 - calculate Q matrices
 
 	auto validEdges = selectValidEdges(); // Step 2 - select all valid pairs
-
-	while(validEdges.size() > 300)
+	int i = 0;
+	//while(validEdges.size() > 50000)
+	while (i < 1)
 	{
 		contractEdge(validEdges);
+		i++;
 	}
 
 	
@@ -81,7 +83,9 @@ void Mesh::contractEdge(validEdgesSet &edgesSet)
 	for (auto face : faceList)
 	{
 		//std::cout << "Replacing: " << face->v1->id << " " << face->v2->id << std::endl;
-		if (face->contains(v1) && face->contains(v2))
+		if (face->deleted == true)
+			continue;
+		else if (face->contains(v1) && face->contains(v2))
 		{
 			//Delete the face
 			face->deleteFace();

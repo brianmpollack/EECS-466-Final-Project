@@ -10,6 +10,7 @@ FerrisWheel::FerrisWheel(float radius)
 	car.read();
 	wheel.read();
 	base.read();
+	wheel.reduce();
 }
 
 void FerrisWheel::draw()
@@ -51,5 +52,5 @@ void FerrisWheel::draw_passenger_cars()
 
 void FerrisWheel::draw_passenger_car(double theta)
 {
-	car.draw(-100*sin(theta), 100-100*cos(theta));
+	//car.draw(-100*sin(theta), 100-100*cos(theta));
 }

@@ -11,12 +11,12 @@ void MeshReader::setFilename(char* filename)
 	this->filename = filename;
 }
 
-void MeshReader::collapse()
+void MeshReader::reduce()
 {
-
+	mesh.reduce();
 }
 
-void MeshReader::draw(float x_trans, float y_trans)
+void MeshReader::draw(float theta)
 {
 	//std::cout << "DRAWING MESH" << std::endl;
 	glColor3f(1, 0, 0);
@@ -60,14 +60,31 @@ void MeshReader::draw(float x_trans, float y_trans)
 		}
 	}
 	std::cout << "NUM FACES PRINTED: " << numFacesPrinted << std::endl;*/
+	float cos_theta = cos(theta);
+	float sin_theta = sin(theta);
 
 	for (auto face : mesh.faceList)
 	{
 		if (face->deleted == true) continue;
-		glBegin(GL_TRIANGLES);
-		glVertex3f(face->v1->x + x_trans, face->v1->y, face->v1->z + y_trans);
-		glVertex3f(face->v2->x + x_trans, face->v2->y, face->v2->z + y_trans);
-		glVertex3f(face->v3->x + x_trans, face->v3->y, face->v3->z + y_trans);
+		glBegin(GL_TRIANGLES); 
+		//glVertex3f(face->v1->x, face->v1->y, face->v1->z);
+		//glVertex3f(face->v2->x, face->v2->y, face->v2->z);
+		//glVertex3f(face->v3->x, face->v3->y, face->v3->z);
+
+		//x' = x*cos q - y*sin q
+		//y' = x*sin q + y*cos q 
+		//z' = z
+
+
+		glVertex3f(face->v1->x * cos_theta - face->v1->y * sin_theta,
+			face->v1->x * sin_theta + face->v1->y * cos_theta,
+			face->v1->z);
+		glVertex3f(face->v2->x * cos_theta - face->v2->y * sin_theta,
+			face->v2->x * sin_theta + face->v2->y * cos_theta,
+			face->v2->z);
+		glVertex3f(face->v3->x * cos_theta - face->v3->y * sin_theta,
+			face->v3->x * sin_theta + face->v3->y * cos_theta,
+			face->v3->z);
 		glEnd();
 		numFacesPrinted++;
 	}

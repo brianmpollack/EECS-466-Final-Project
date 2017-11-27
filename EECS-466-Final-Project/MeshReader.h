@@ -13,7 +13,7 @@ public:
 	MeshReader();
 	void setFilename(char* filename);
 	void read();
-	void draw(float x_trans=0.0, float y_trans=0.0);
-	void collapse();
+	void draw(float theta=0.0);
+	void reduce();
 };
 
