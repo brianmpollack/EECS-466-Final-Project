@@ -5,6 +5,96 @@
     <body>
         <h1>Brian Pollack EECS 466 Research Project</h1>
         <h2>Mesh Simplification</h2>
-        <p>This is a test.</p>
+        <h3>Summary</h3>
+        <p>
+            I implemented a mesh simplification algorithm, originally proposed by Garland and Heckbert, and used it to simplify the helicopter we used in our homework projects.
+        </p>
+        <h3>Methodology</h3>
+        <p>
+            I started with Garland and Heckbert's 1997 paper, Surface Simplification Using Quadric Error Metrics. Garland and Heckbert gave a high-level overview of the algorithms used, so I was able to extrapolate from their description and implement them in C++.
+            <br>
+            The main steps in this algorithm include:
+            <ul>
+                <li>Compute Q matrices for each vertex - this is the error in the mesh introduced by removing this vertex.</li>
+                <li>Select all edges in the mesh</li>
+                <li>For each edge, compute the optimal contraction target (the new vertex which would be created if we contract this edge)</li>
+                <li>Iteratively contract the lowest cost edge, and update the Q matrices and optimal contraction targets.</li>
+            </ul>
+        </p>
+        <p>
+            I built upon parts of the homework templates we have been using in-class. I used parts of the Mesh Reader and the main OpenGL code in my project.
+        </p>
+        <p>
+            In addition to implementing mesh reduction, I wanted to display an interesting image on the screen. I used the helicopter we saw in class and animated the blades turning. To do this, I used a program called MeshLab to separate the blades from the body of the helicopter.
+        </p>
+        <h3>Results</h3>
+        <p>
+            I implemented the algorithm proposed by Garland and Heckbert. I did not implement boundary preservation or mesh inversion protection, which would be good extensions of this work. The algorithm is not slow, but does not break any speed records. Another good extension might be to implement multithreading.
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Reduction Percentage</th>
+                    <th>Faces After Reduction</th>
+                    <th>Image After Reduction</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>0</td>
+                    <td>2226</td>
+                    <td><video width="350px" controls autoplay loop><source src="./reduction00.mov"/>Your browser does not support HTML5 video.</video></td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>1989</td>
+                    <td><video width="350px" controls autoplay loop><source src="./reduction10.mov"/>Your browser does not support HTML5 video.</video></td>
+                </tr>
+                <tr>
+                    <td>20</td>
+                    <td>1766</td>
+                    <td><video width="350px" controls autoplay loop><source src="./reduction20.mov"/>Your browser does not support HTML5 video.</video></td>
+                </tr>
+                <tr>
+                    <td>30</td>
+                    <td>1594</td>
+                    <td><video width="350px" controls autoplay loop><source src="./reduction30.mov"/>Your browser does not support HTML5 video.</video></td>
+                </tr>
+                <tr>
+                    <td>40</td>
+                    <td>1380</td>
+                    <td><video width="350px" controls autoplay loop><source src="./reduction40.mov"/>Your browser does not support HTML5 video.</video></td>
+                </tr>
+                <tr>
+                    <td>50</td>
+                    <td>1165</td>
+                    <td><video width="350px" controls autoplay loop><source src="./reduction50.mov"/>Your browser does not support HTML5 video.</video></td>
+                </tr>
+                <tr>
+                    <td>60</td>
+                    <td>930</td>
+                    <td><video width="350px" controls autoplay loop><source src="./reduction60.mov"/>Your browser does not support HTML5 video.</video></td>
+                </tr>
+                <tr>
+                    <td>70</td>
+                    <td>695</td>
+                    <td><video width="350px" controls autoplay loop><source src="./reduction70.mov"/>Your browser does not support HTML5 video.</video></td>
+                </tr>
+                <tr>
+                    <td>80</td>
+                    <td>462</td>
+                    <td><video width="350px" controls autoplay loop><source src="./reduction80.mov"/>Your browser does not support HTML5 video.</video></td>
+                </tr>
+                <tr>
+                    <td>90</td>
+                    <td>228</td>
+                    <td><video width="350px" controls autoplay loop><source src="./reduction90.mov"/>Your browser does not support HTML5 video.</video></td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>References</h3>
+        <ul>
+            <li><a href="https://dl.acm.org/citation.cfm?id=258849">Surface simplification using quadric error metrics</a></li>
+        </ul>
     </body>
 </html>
