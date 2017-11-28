@@ -8,6 +8,8 @@ Helicopter::Helicopter()
 	mesh_blades.setFilename("helicopter-bladesonly.obj");
 	mesh_body.read();
 	mesh_blades.read();
+	mesh_body.reduce(reductionRatio);
+	mesh_blades.reduce(0.15);
 }
 
 
@@ -32,4 +34,17 @@ void Helicopter::doAnimation()
 	blades_rotation_theta += PI / 64;
 	if (blades_rotation_theta > 2 * PI)
 		blades_rotation_theta = 0;
+}
+
+void Helicopter::increaseRatio()
+{
+	mesh_body.reset();
+	reductionRatio += 0.10;
+	mesh_body.reduce(reductionRatio);
+}
+void Helicopter::decreaseRatio()
+{
+	mesh_body.reset();
+	reductionRatio -= 0.10;
+	mesh_body.reduce(reductionRatio);
 }

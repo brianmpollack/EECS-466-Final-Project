@@ -16,7 +16,6 @@ private:
 	std::shared_ptr<Vertex> create_vertex(Vector3& v);
 	std::pair<validEdgesSet::iterator, std::shared_ptr<Edge>> get_lowest_cost_edge(validEdgesSet &edgesSet);
 public:
-	double ratio = .6;
 	int delFace;
 	int verts = 0, faces = 0, norms = 0;    // Number of vertices, faces and normals in the system
 	//Vertex *vertList;
@@ -26,6 +25,6 @@ public:
 	Mesh();
 	~Mesh();
 	void calculateQs();
-	void reduce();
+	void reduce(float ratio=0.6);
 };
 

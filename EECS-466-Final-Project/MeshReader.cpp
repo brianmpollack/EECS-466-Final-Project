@@ -11,55 +11,17 @@ void MeshReader::setFilename(char* filename)
 	this->filename = filename;
 }
 
-void MeshReader::reduce()
+void MeshReader::reduce(float ratio)
 {
-	mesh.reduce();
+	mesh.reduce(ratio);
 }
 
 void MeshReader::draw(float theta)
 {
-	//std::cout << "DRAWING MESH" << std::endl;
-	glColor3f(1, 0, 0);
 
 	//int tempSTOP = 0; //TODO: REMOVE
 	int numFacesPrinted = 0;
-/*
-	std::map<int, std::shared_ptr<Vertex>>::iterator it; //All vertices
-	for (it = mesh.vertList.begin(); it != mesh.vertList.end(); it++)
-	{
-		auto v1 = it->second;
-		if (v1->isDeleted == true) continue;
 
-		std::vector<std::shared_ptr<Edge>>::iterator it2; //v1's edges
-		for (it2 = v1->edges.begin(); it2 != v1->edges.end(); it2++)
-		{
-			auto v2 = (*it2)->v2;
-			if (v2->isDeleted == true) continue;
-			std::vector<std::shared_ptr<Edge>>::iterator it3; //v2's edges
-			for (it3 = it2; it3 != v1->edges.end(); it3++)
-			{
-				auto v3 = (*it3)->v2;
-				//If v3 is connected to v2
-				//std::cout << "V2" << v2.x << "," << "v2.y" << "," << v2.z << std::endl;
-				//Vertex vtest = *v2.connectedVertices[0];
-				//std::cout << vtest.x << "," << vtest.y << "," << vtest.z << std::endl;
-				//if (std::find(v2.connectedVertices.begin(), v2.connectedVertices.end(), &v3) != v2.connectedVertices.end())
-				if (v2->isConnectedTo(v3))
-				{
-					//std::cout << "PRINTING TRIANGLE" << std::endl;
-					glBegin(GL_TRIANGLES);
-					glVertex3f(v1->x, v1->y, v1->z);
-					glVertex3f(v2->x, v2->y, v2->z);
-					glVertex3f(v3->x, v3->y, v3->z);
-					glEnd();
-					numFacesPrinted++;
-				}
-				//if (tempSTOP > 5) return;
-				//tempSTOP ++ ;
-			}
-		}
-	}
-	std::cout << "NUM FACES PRINTED: " << numFacesPrinted << std::endl;*/
 	float cos_theta = cos(theta);
 	float sin_theta = sin(theta);
 
@@ -67,6 +29,7 @@ void MeshReader::draw(float theta)
 	{
 		if (face->deleted == true) continue;
 		glBegin(GL_TRIANGLES); 
+		glColor3f(65.0/255.0, 83.0/255.0, 59.0/255.0);
 		//glVertex3f(face->v1->x, face->v1->y, face->v1->z);
 		//glVertex3f(face->v2->x, face->v2->y, face->v2->z);
 		//glVertex3f(face->v3->x, face->v3->y, face->v3->z);
@@ -74,7 +37,6 @@ void MeshReader::draw(float theta)
 		//x' = x*cos q - y*sin q
 		//y' = x*sin q + y*cos q 
 		//z' = z
-
 
 		glVertex3f(face->v1->x * cos_theta - face->v1->y * sin_theta,
 			face->v1->x * sin_theta + face->v1->y * cos_theta,
@@ -164,9 +126,6 @@ void MeshReader::read()
 		//std::cout << "Inserting vertex number" << i << std::endl;
 	}
 
-
-	std::cout << "Vertex numbering test: 3......" << mesh.vertList[3]->id << std::endl;
-
 	// Read the faces
 	for (i = 0; i < mesh.faces; i++)
 	{
@@ -175,5 +134,10 @@ void MeshReader::read()
 		mesh.faceList.push_back(std::make_shared<Face>(Face(mesh.vertList[ix], mesh.vertList[iy], mesh.vertList[iz])));
 	}
 	fclose(fp);
+}
 
+void MeshReader::reset()
+{
+	mesh = Mesh();
+	read();
 }

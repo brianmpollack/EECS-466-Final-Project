@@ -61,6 +61,12 @@ void KeyboardFunc(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
+	case '+':
+		helicopter.increaseRatio();
+		break;
+	case '-':
+		helicopter.decreaseRatio();
+		break;
 	case 'Q':
 	case 'q':
 		exit(1);
@@ -94,7 +100,8 @@ void display(void) {
 		0, 0, 0,
 		0, 0, 1);
 	//glEnable(GL_DEPTH_TEST);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_BACK, GL_FILL);
 
 	//ferris_wheel.draw();
 	helicopter.draw();

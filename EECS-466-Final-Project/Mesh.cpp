@@ -26,18 +26,18 @@ void Mesh::calculateQs()
 	}
 }
 
-void Mesh::reduce()
+void Mesh::reduce(float ratio)
 {
 	// Step 1 - calculate Q matrices
 	calculateQs(); // Step 1 - calculate Q matrices
 
 	auto validEdges = selectValidEdges(); // Step 2 - select all valid pairs
-	int i = 0;
-	//while(validEdges.size() > 50000)
-	while (i < 1)
+
+	int initialEdges = validEdges.size();
+
+	while(validEdges.size() > (1-ratio) * initialEdges)
 	{
 		contractEdge(validEdges);
-		i++;
 	}
 
 	

@@ -14,6 +14,7 @@ public:
 	void setFilename(char* filename);
 	void read();
 	void draw(float theta=0.0);
-	void reduce();
+	void reduce(float ratio=0.6);
+	void reset();
 };
 
