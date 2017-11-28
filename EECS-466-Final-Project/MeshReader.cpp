@@ -30,6 +30,9 @@ void MeshReader::draw(float theta)
 		if (face->deleted == true) continue;
 		glBegin(GL_TRIANGLES); 
 		glColor3f(65.0/255.0, 83.0/255.0, 59.0/255.0);
+
+
+
 		//glVertex3f(face->v1->x, face->v1->y, face->v1->z);
 		//glVertex3f(face->v2->x, face->v2->y, face->v2->z);
 		//glVertex3f(face->v3->x, face->v3->y, face->v3->z);
