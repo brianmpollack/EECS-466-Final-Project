@@ -9,6 +9,8 @@
         <p>
             I implemented a mesh simplification algorithm, originally proposed by Garland and Heckbert, and used it to simplify the helicopter we used in our homework projects.
         </p>
+        <h3>Prior Work</h3>
+        <p>Garland and Heckbert wrote a paper in 1997 describing a mesh reduction algorithm. Their algorithm was efficient, produced high quality results, and could connect regions in the mesh that were close, but not actually connected. They did not provide any source code and I could not find much online about their algorithm except for their paper. I thought it would be a fun challenge to try to implement their algorithm.</p>
         <h3>Methodology</h3>
         <p>
             I started with Garland and Heckbert's 1997 paper, Surface Simplification Using Quadric Error Metrics. Garland and Heckbert gave a high-level overview of the algorithms used, so I was able to extrapolate from their description and implement them in C++.
@@ -25,12 +27,22 @@
             I built upon parts of the homework templates we have been using in-class. I used parts of the Mesh Reader and the main OpenGL code in my project.
         </p>
         <p>
-            In addition to implementing mesh reduction, I wanted to display an interesting image on the screen. I used the helicopter we saw in class and animated the blades turning. To do this, I used a program called MeshLab to separate the blades from the body of the helicopter.
+            In addition to implementing mesh reduction, I wanted to display an interesting image on the screen. I used the helicopter we saw in class and animated the blades turning. To do this, I used a program called MeshLab to separate the blades from the body of the helicopter. The body of the helicopter is static but the blades are rotating. The user can pan the camera like in our assignments.
         </p>
         <h3>Results</h3>
         <p>
-            I implemented the algorithm proposed by Garland and Heckbert. I did not implement boundary preservation or mesh inversion protection, which would be good extensions of this work. The algorithm is not slow, but does not break any speed records. Another good extension might be to implement multithreading.
+            I implemented the algorithm proposed by Garland and Heckbert. While I did not reach their stated efficiency, I believe that if I used native C data structures (rather than using std::vector, etc.) and implemented a few other performance-improving modifications I would achieve Garland and Heckbert's claimed performance.
         </p>
+        <h3>Future Work</h3>
+        <p>
+            I believe the following modifications could be done to my work:
+        </p>
+        <ul>
+            <li>Implement multithreading</li>
+            <li>Identify boundaries of mesh and preserve all boundaries (rather than simplifying edges which are on a boundary)</li>
+            <li>Protect against face inversion (when the normal of the face switches directions)</li>
+            <li>Use C data structures (rather than std::vector, etc.) and otherwise improve data structures and memory management</li>
+        </ul>
         <table>
             <thead>
                 <tr>
