@@ -9,6 +9,13 @@
         <p>
             I implemented a mesh simplification algorithm, originally proposed by Garland and Heckbert, and used it to simplify the helicopter we used in our homework projects.
         </p>
+        <h3>Background</h3>
+        <p>
+            Mesh representations contain a list of faces that make up an object. Mesh representations can contain hundreds of thousands of faces, or tens of faces depending on how detailed the creator wants to make the meshes.
+            Many times a mesh developer wants to <i>reduce</i> a mesh so it can be displayed and used faster. Typically when reducing a mesh, certain faces which are next to each other are combined to a single face. Some time is invested to reduce the mesh but it can then the computer will have a much easier time using it after reduction.
+            <br>
+            Mesh reduction is especially useful to display objects far away from the screen. It is unnecessary to display a far-away object with great detail as it will be small enough that the user cannot see the details anyway. 
+        </p>
         <h3>Prior Work</h3>
         <p>Garland and Heckbert wrote a paper in 1997 describing a mesh reduction algorithm. Their algorithm was efficient, produced high quality results, and could connect regions in the mesh that were close, but not actually connected. They did not provide any source code and I could not find much online about their algorithm except for their paper. I thought it would be a fun challenge to try to implement their algorithm.</p>
         <h3>Methodology</h3>
